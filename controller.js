@@ -26,7 +26,7 @@ function getFiles(req, res, dir) {
     var data = [];
 
     files.filter(function (file) {
-      console.log(file);
+      // console.log(file);
       return file != '.DS_Store';
     })
       .forEach(function (file) {
