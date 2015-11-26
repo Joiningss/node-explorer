@@ -12,9 +12,9 @@ function getFiles(req, res, dir) {
     currentDir = path.resolve(dir, query);
   }
 
-  //if (up) {
-  //  currentDir = query;
-  //}
+  if (up) {
+    currentDir = query;
+  }
 
   console.log('Browsing: '.green, currentDir.cyan);
 
@@ -34,7 +34,7 @@ function getFiles(req, res, dir) {
           data.push({
             name: file,
             isDirectory: fs.statSync(path.join(currentDir, file)).isDirectory(),
-            path: path.join(query, file),
+            path:  path.relative(dir,path.join(query, file)),
             ext: path.extname(file)
           });
         }
@@ -45,6 +45,7 @@ function getFiles(req, res, dir) {
       });
     data = _.sortBy(data, function(f) { return f.Name; });
     data.push(currentDir);
+    data.push(dir);
     res.json(data);
   });
 }
